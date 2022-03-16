@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start-react": "react-scripts start",
-    "start-express": "nodemon ./server/index.js",
+    "start-express": "nodemon ./server/index.mjs",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
