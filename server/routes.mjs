@@ -18,7 +18,6 @@ function getRoutes() {
     Todo.findAll().then(todos => res.json(todos));
   });
 
-  
   router.get('/todos/search', function(req, res) {
     let whereQuery = {}
     if (req.query.checked) {
@@ -42,6 +41,17 @@ function getRoutes() {
   router.post('/todos', async function(req, res) {
     try {
       let todo = await Todo.create({ description: req.body.description, checked: req.body.checked })
+      res.json(todo)
+    } catch (e) {
+      res.json(e)
+    }
+  })
+
+  router.put('/todos/:id', async function(req, res) {
+    try {
+      let todo = await Todo.findByPk(req.params.id)
+      todo.set(req.body)
+      await todo.save()
       res.json(todo)
     } catch (e) {
       res.json(e)

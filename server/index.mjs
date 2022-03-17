@@ -16,11 +16,7 @@ sequelize.sync({ force: true }).then(() => {
       { description: 'this one has already been done', checked: true },
       { description: 'remember to write up meeting notes'},
       { description: 'learn how to use node orm' }
-  ]).then(function() {
-      return Todo.findAll();
-  }).then(function(todos) {
-      console.log(todos);
-  });
+  ])
 });
 
 const port = 5000;
