@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # mysql_db:
+  #   image: mysql
+  #   restart: always
+  #   cap_add:
+  #     - SYS_NICE
+  #   volumes:
+  #     - "./setup.sql:/docker-entrypoint-initdb.d/setup.sql"
+  #   ports:
+  #     - "9906:3306"
+  #   environment:
+  #     <<: *common-variables
+  #     MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+  #     MYSQL_HOST: localhost
+
+  # adminer:
+  #     image: adminer:latest
+  #     restart: unless-stopped
+  #     ports:
+  #       - 8000:8080
+  #     depends_on:
+  #       - mysql_db
+  #     environment:
+  #       ADMINER_DEFAULT_SERVER: mysql_db
+
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3050:80"
+
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: "./server"
+    depends_on:
+      - db
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    # environment:
+    #   <<: *common-variables
+    #   MYSQL_HOST_IP: mysql_db
+
+  client:
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/create_database.sql
+volumes:
+  db:
+    driver: local

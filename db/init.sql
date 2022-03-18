@@ -1,0 +1,1 @@
+CREATE DATABASE react_todo;

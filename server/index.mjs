@@ -8,7 +8,7 @@ import { getRoutes } from './routes.mjs'
 
 const app = express()
 app.use(bodyParser.json())
-app.use('/api', getRoutes())
+app.use('/', getRoutes())
 
 sequelize.sync({ force: true }).then(() => {
   console.log(`Database & tables created!`);
@@ -19,5 +19,5 @@ sequelize.sync({ force: true }).then(() => {
   ])
 });
 
-const port = 5000;
+const port = 3001;
 app.listen(port, () => console.log(`express-todo listening on port ${port}!`));
