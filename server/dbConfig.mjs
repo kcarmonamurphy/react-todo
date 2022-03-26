@@ -1,6 +1,13 @@
 import Sequelize from 'sequelize'
+import dotenv from 'dotenv'
 
-const sequelize = new Sequelize('postgres://kevin@localhost:5432/todos_express')
+dotenv.config()
+const dbUser = process.env.DB_USER
+const dbPassword = process.env.DB_PASSWORD
+const dbName = process.env.DB_NAME
+const dbPort = process.env.DB_PORT
+
+const sequelize = new Sequelize(`postgres://${dbUser}:${dbPassword}@localhost:${dbPort}/${dbName}`)
 
 sequelize
   .authenticate()

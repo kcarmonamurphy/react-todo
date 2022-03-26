@@ -13,15 +13,16 @@
     "web-vitals": "^2.1.4",
     "express": "^4.17.3",
     "nodemon": "^2.0.15",
-    "sequelize": "^6.17.0"
+    "sequelize": "^6.17.0",
+    "dotenv": "10.0.0"
   },
   "devDependencies": {
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4"
   },
   "scripts": {
-    "start-react": "react-scripts start",
-    "start-express": "nodemon ./server/index.mjs",
+    "client": "react-scripts start",
+    "server": "nodemon ./server/index.mjs",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -43,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">= 16"
   }
 }

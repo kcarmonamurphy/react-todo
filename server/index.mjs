@@ -1,8 +1,8 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import dotenv from 'dotenv'
 
 import sequelize from './dbConfig.mjs'
-
 import { Todo } from './models.mjs'
 import { getRoutes } from './routes.mjs'
 
@@ -19,5 +19,8 @@ sequelize.sync({ force: true }).then(() => {
   ])
 });
 
-const port = 5000;
+dotenv.config()
+const DEFAULT_SERVER_PORT = 7002
+const port = process.env.SERVER_PORT || DEFAULT_SERVER_PORT
+
 app.listen(port, () => console.log(`express-todo listening on port ${port}!`));
