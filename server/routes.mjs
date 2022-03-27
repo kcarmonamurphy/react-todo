@@ -12,10 +12,19 @@ function parseBoolean(str) {
 function getRoutes() {
   const router = express.Router()
 
-  router.get('/', (req, res) => res.send('Todos App'));
-
-  router.get('/todos', function(req, res) {
-    Todo.findAll().then(todos => res.json(todos));
+  router.get('/todos', async function(req, res) {
+    try {
+      let todos = await Todo.findAll({
+        order: [
+          ['checked', 'ASC'],
+          ['updatedAt', 'DESC']
+        ]
+      })
+      res.json(todos)
+    }
+    catch (e) {
+      res.json({ error: e })
+    }
   });
 
   router.get('/todos/search', function(req, res) {
@@ -43,18 +52,18 @@ function getRoutes() {
       let todo = await Todo.create({ description: req.body.description, checked: req.body.checked })
       res.json(todo)
     } catch (e) {
-      res.json(e)
+      res.json({ error: e })
     }
   })
 
-  router.put('/todos/:id', async function(req, res) {
+  router.patch('/todos/:id', async function(req, res) {
     try {
       let todo = await Todo.findByPk(req.params.id)
       todo.set(req.body)
       await todo.save()
       res.json(todo)
     } catch (e) {
-      res.json(e)
+      res.json({ error: e })
     }
   })
 

@@ -1,6 +1,6 @@
 const Header = () => {
    return (
-       <header>
+       <header style={{ display: 'flex', justifyContent: 'center'}}>
            <h1>To Do List</h1>
        </header>
    );

@@ -1,3 +1,14 @@
+import styled from 'styled-components'
+
+const ToDoDiv = styled.div`
+  padding: 0.25em 1em;
+  cursor: pointer;
+  font-size: medium;
+  &:hover {
+    color: #0087f5;
+  }
+`;
+
 const ToDo = ({ todo, handleToggle }) => {
   const handleClick = (e) => {
     e.preventDefault()
@@ -5,9 +16,9 @@ const ToDo = ({ todo, handleToggle }) => {
   }
 
   return (
-    <div id={todo.id} className={todo.checked ? "strike" : ""} onClick={handleClick}>
+    <ToDoDiv id={todo.id} className={todo.checked ? "strike" : ""} onClick={handleClick}>
         {todo.description}
-    </div>
+    </ToDoDiv>
   );
 };
 

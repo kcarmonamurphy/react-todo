@@ -1,16 +1,15 @@
 import ToDo from './ToDo.js'
 
-const ToDoList = ({toDoList, handleToggle, handleFilter}) => {
-    return (
-        <div>
-            {toDoList.map(todo => {
-                return (
-                    <ToDo key={todo.id} todo={todo} handleToggle={handleToggle} handleFilter={handleFilter}/>
-                )
-            })}
-            <button style={{margin: '20px'}} onClick={handleFilter}>Clear Completed</button>
-        </div>
-    );
- };
+const ToDoList = ({toDoList, handleToggle}) => {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', textAlign: 'center' }}>
+      {toDoList.map(todo => {
+        return (
+          <ToDo key={todo.id} todo={todo} handleToggle={handleToggle}/>
+        )
+      })}
+    </div>
+  );
+ }
   
- export default ToDoList;
+ export default ToDoList

@@ -25,42 +25,51 @@ const callBackendAPI = async (endpoint, method, body) => {
 function App() {
   const [ toDoList, setToDoList ] = useState([])
   
-  useEffect(async () => {
-    setToDoList(await callBackendAPI('/api/todos', 'GET'))
+  useEffect(() => {
+    (async () => {
+      setToDoList(await callBackendAPI('/api/todos/search?checked=false', 'GET'))
+    })()
   }, [])
   
   const handleToggle = async (id) => {
-    let todo = toDoList.find(todo => todo.id == id)
+    let todo = toDoList.find(todo => String(todo.id) === id)
 
-    await callBackendAPI(`/api/todos/${id}`, 'PUT', {
+    await callBackendAPI(`/api/todos/${id}`, 'PATCH', {
       checked: !todo.checked
     })
 
     let mapped = toDoList.map(todo => {
-      return todo.id == id ? { ...todo, checked: !todo.checked } : { ...todo}
+      return String(todo.id) === id ? { ...todo, checked: !todo.checked } : { ...todo}
     });
     setToDoList(mapped)
   }
 
-  const handleFilter = () => {
+  const handleClear = () => {
     let filtered = toDoList.filter(task => {
-      return !task.checked;
+      return !task.checked
     });
-    setToDoList(filtered);
+    setToDoList(filtered)
+  }
+
+  const handleShow = async () => {
+    let todos = await callBackendAPI('/api/todos', 'GET')
+    setToDoList(todos)
   }
 
   const addTask = async (userInput) => {
     let todo = await callBackendAPI('/api/todos', 'POST', {
       description: userInput
     })
-    setToDoList([...toDoList, todo]);
+    setToDoList([todo, ...toDoList])
   }
 
   return (
     <div className="App">
       <Header />
-      <ToDoList toDoList={toDoList} handleToggle={handleToggle} handleFilter={handleFilter} />
-      <ToDoForm addTask={addTask} />
+      <ToDoForm addTask={addTask} handleClear={handleClear} handleShow={handleShow} />
+      <div style={{ marginBottom: '10px' }}>
+        <ToDoList toDoList={toDoList} handleToggle={handleToggle} />
+      </div>
     </div>
   );
 }
