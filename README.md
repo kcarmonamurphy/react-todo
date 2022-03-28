@@ -1,6 +1,6 @@
 # React Todo
 
-This project was bootstrapped with Create React App. See the [README](CRA-README.md).
+This project was bootstrapped with Create React App. See the [README](readme/CRA-README.md).
 
 It uses a backend server written with in the Express framework using the Sequelize ORM.
 
