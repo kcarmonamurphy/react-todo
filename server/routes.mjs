@@ -1,15 +1,13 @@
 import express from 'express'
 import Sequelize from 'sequelize'
 
-import { Todo } from './models.mjs'
-
 const Op = Sequelize.Op;
 
 function parseBoolean(str) {
   return String(str).toLowerCase() === 'true';
 }
 
-function getRoutes() {
+function getRoutes(Todo) {
   const router = express.Router()
 
   router.get('/todos', async function(req, res) {

@@ -9,13 +9,24 @@ const dbPort = process.env.DB_PORT
 
 const sequelize = new Sequelize(`postgres://${dbUser}:${dbPassword}@localhost:${dbPort}/${dbName}`)
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  })
+const connect = async () => {
+  try {
+    await sequelize.authenticate()
+    return 'Connection has been established successfully.'
+  } catch (e) {
+    return `Unable to connect to the database: ${err}`
+  }
+}
 
-export default sequelize
+const sync = async (Todo) => {
+  sequelize.sync({ force: true }).then(() => {
+    console.log(`Database & tables created!`);
+    Todo.bulkCreate([
+        { description: 'this one has already been done', checked: true },
+        { description: 'remember to write up meeting notes'},
+        { description: 'learn how to use node orm' }
+    ])
+  })
+}
+
+export { connect, sync, sequelize }
