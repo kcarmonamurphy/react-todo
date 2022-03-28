@@ -1,8 +1,12 @@
+![pK6wgEq26Z](https://user-images.githubusercontent.com/1145018/160311847-1c323bf3-cb06-4c95-89b6-e6b041535b0d.gif)
+
 # React Todo
 
 This project was bootstrapped with Create React App. See the [README](readme/CRA-README.md).
 
-It uses a backend server written with in the Express framework using the Sequelize ORM.
+It uses a backend server written with the Express framework using the Sequelize ORM.
+
+Styling provided by `styled-components` node addon.
 
 ### Getting Started
 
